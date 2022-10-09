@@ -13,7 +13,7 @@ public record Stage(string Name, int Energy);
 public record struct StageRef(int Section, int Stage);
 
 // 敵がどのステージに出現するか。
-public record EnemyAppearance(string Name, StageRef[] Stages);
+public record EnemyAppearance(int EnemyId, StageRef[] Stages);
 
 public record Enemy(int Id, string Name, string Kana, string Romaji)
 {

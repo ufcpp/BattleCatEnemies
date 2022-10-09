@@ -24,11 +24,19 @@ await File.WriteAllTextAsync("legend_enemies.json", JsonSerializer.Serialize(ene
 
 static class Converter
 {
+    private static IReadOnlyDictionary<string, int> _enemyTable;
+
+    static Converter()
+    {
+        var enemies = BattleCatModels.Enemy.LoadFromCsv(File.ReadAllText("enemies.txt"));
+        _enemyTable = enemies.GroupBy(e => e.Name).ToDictionary(g => g.Key, g => g.First().Id);
+    }
+
     public static BattleCatModels.Story Convert(string name, Story x) => new(name, x.Sections.Select(Convert).ToArray());
     public static BattleCatModels.Section Convert(Section x) => new(x.Name, x.Stages.Select(Convert).ToArray());
     public static BattleCatModels.Stage Convert(Stage x) => new(x.Name, x.Energy);
     public static BattleCatModels.EnemyAppearance[] Convert(Enemy[] x) => x.Select(Convert).ToArray();
-    public static BattleCatModels.EnemyAppearance Convert(Enemy x) => new(x.Name, x.AppearingStages.Select(ToRef).ToArray());
+    public static BattleCatModels.EnemyAppearance Convert(Enemy x) => new(_enemyTable[x.Name], x.AppearingStages.Select(ToRef).ToArray());
     public static BattleCatModels.StageRef ToRef(Stage x) => new(x.Section.Index, x.Index);
 }
 
