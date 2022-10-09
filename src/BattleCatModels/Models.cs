@@ -13,5 +13,22 @@ public record Stage(string Name, int Energy);
 public record struct StageRef(int Section, int Stage);
 
 // 敵がどのステージに出現するか。
-public record Enemy(string Name, StageRef[] Stages);
+public record EnemyAppearance(string Name, StageRef[] Stages);
 
+public record Enemy(int Id, string Name, string Kana)
+{
+    public static Enemy[] LoadFromCsv(string csv)
+    {
+        var lines = csv.Split('\n');
+        var enemies = new Enemy[lines.Length];
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var line = lines[i];
+            var items = line.Split(',');
+            enemies[i] = new(int.Parse(items[0]), items[1], items[2]);
+        }
+
+        return enemies;
+    }
+}
