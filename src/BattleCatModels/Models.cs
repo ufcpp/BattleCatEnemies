@@ -26,7 +26,17 @@ public record Enemy(int Id, string Name, string Kana)
         {
             var line = lines[i];
             var items = line.Split(',');
-            enemies[i] = new(int.Parse(items[0]), items[1], items[2]);
+
+            if (items.Length < 2) continue;
+
+            var id = int.Parse(items[0]);
+            var name = items[1];
+            var kana = items[2];
+
+            // kana is empty if it can be obtained by a simple transformation from name.
+            if(string.IsNullOrEmpty(kana)) kana = Japanese.Kana.KatakanaToHiragana(name);
+
+            enemies[i] = new(id, name, kana);
         }
 
         return enemies;
