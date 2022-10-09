@@ -2,10 +2,16 @@ using BattleCatModels;
 
 var enemies = Enemy.LoadFromCsv(await File.ReadAllTextAsync("enemies.txt"));
 
-foreach (var e in enemies)
+while (true)
 {
-    Console.WriteLine($"{e.Id},{e.Name},{e.Kana},{BattleCatModels.Japanese.Kana.HirakanaToRomaji(e.Kana)}");
-}
+    var line = Console.ReadLine();
 
-//var kanaChars = enemies.SelectMany(e => e.Kana).Distinct().Order();
-//foreach (var c in kanaChars) Console.WriteLine($"{c} {(int)c:X}");
+    if (string.IsNullOrEmpty(line)) break;
+
+    var found = Enemy.FindByName(enemies, line);
+
+    foreach (var e in found)
+    {
+        Console.WriteLine(e);
+    }
+}

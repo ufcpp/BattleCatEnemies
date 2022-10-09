@@ -39,7 +39,7 @@ public static class Kana
             'ゃ' => "ya", 'や' => "ya", 'ゅ' => "yu", 'ゆ' => "yu", 'ょ' => "yo", 'よ' => "yo",
             'ら' => "ra", 'り' => "ri", 'る' => "ru", 'れ' => "re", 'ろ' => "ro",
             'ゎ' => "wa", 'わ' => "wa", 'ゐ' => "wi", 'ゑ' => "we", 'を' => "wo",
-            'ん' => "n", 'ゔ' => "vu", 'ゕ' => "ka", 'ゖ' => "ke", 'ー' => "-",
+            'ん' => "n", 'ゔ' => "vu", 'ゕ' => "ka", 'ゖ' => "ke", 'ー' => "-", '～' => "-",
             _ => null,
         };
 
@@ -132,7 +132,7 @@ public static class Kana
             }
 
             if (oneChar(s[i]) is { } r) sb.Append(r);
-            else sb.Append(s[i]);
+            else sb.Append(char.ToLowerInvariant(s[i]));
         }
 
         return sb.ToString();

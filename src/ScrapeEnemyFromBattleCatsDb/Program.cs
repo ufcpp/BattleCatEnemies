@@ -40,7 +40,7 @@ static class Kana
 static partial class Reg
 {
     [GeneratedRegex("""
-        <a href="\.\.\/enemy\/(?<id>\d+?)\.html">(?<name>\w+?)<\/a>
+        <a href="\.\.\/enemy\/(?<id>\d+?)\.html">(?<name>.+?)<\/a>
         """)]
     public static partial Regex Enemy();
 }

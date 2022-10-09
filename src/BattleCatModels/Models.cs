@@ -15,7 +15,7 @@ public record struct StageRef(int Section, int Stage);
 // 敵がどのステージに出現するか。
 public record EnemyAppearance(string Name, StageRef[] Stages);
 
-public record Enemy(int Id, string Name, string Kana)
+public record Enemy(int Id, string Name, string Kana, string Romaji)
 {
     public static Enemy[] LoadFromCsv(string csv)
     {
@@ -36,9 +36,26 @@ public record Enemy(int Id, string Name, string Kana)
             // kana is empty if it can be obtained by a simple transformation from name.
             if(string.IsNullOrEmpty(kana)) kana = Japanese.Kana.KatakanaToHiragana(name);
 
-            enemies[i] = new(id, name, kana);
+            enemies[i] = new(id, name, kana, Japanese.Kana.HirakanaToRomaji(kana));
         }
 
         return enemies;
+    }
+
+    public static IEnumerable<Enemy> FindByName(Enemy[] enemies, string name)
+    {
+        var list = new List<Enemy>();
+        var kname = Japanese.Kana.KatakanaToHiragana(name);
+        var lname = name.ToLower();
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy.Name.Contains(name)
+                || enemy.Kana.Contains(kname)
+                || enemy.Romaji.Contains(lname)
+                ) list.Add(enemy);
+        }
+
+        return list;
     }
 }
