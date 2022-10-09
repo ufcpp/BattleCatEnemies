@@ -1,5 +1,11 @@
-﻿using System.Runtime.InteropServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ScrapeFromGameLinkPlus;
 
@@ -17,7 +23,7 @@ static partial class HtmlTag
 
 static class Parser
 {
-    public static NyankoData Parse(string content)
+    public static Story Parse(string content)
     {
         Dictionary<string, Enemy> enemies = new();
         var sections = ParseSection(content, enemies);
@@ -33,13 +39,16 @@ static class Parser
             var items = content.Split("<h2>")
                 .Where(t => t.Contains("ステージ名"));
 
+            var i = 0;
             foreach (var x in items)
             {
                 var m = HtmlTag.Span().Match(x);
                 System.Diagnostics.Debug.Assert(m.Success);
 
                 var name = m.Groups["value"].Value;
-                yield return new(name, ParseStage(x, enemies));
+                var section = new Section(name, i++, ParseStage(x, enemies));
+                foreach (var stage in section.Stages) stage.Section = section;
+                yield return section;
             }
         }
     }
@@ -53,6 +62,7 @@ static class Parser
             var items = content.Split("<tr>")
                 .Where(t => t.Contains("<td>"));
 
+            var i = 0;
             foreach (var x in items)
             {
                 var m = HtmlTag.Td().Match(x);
@@ -65,13 +75,8 @@ static class Parser
 
                 var stamina = int.Parse(m.Groups["value"].Value);
 
-                var stage = new Stage(name, stamina, ParseEmeny(x, enemies));
-
-                foreach (var e in stage.Enemies)
-                {
-                    e.AppearingStages.Add(stage);
-                }
-
+                var stage = new Stage(name, i++, stamina, ParseEmeny(x, enemies));
+                foreach (var e in stage.Enemies) e.AppearingStages.Add(stage);
                 yield return stage;
             }
         }

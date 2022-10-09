@@ -1,4 +1,6 @@
 using ScrapeFromGameLinkPlus;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 
 var url = "https://gamelinkplus.com/battlecats/legend-stage-enemy-list/";
 
@@ -6,8 +8,29 @@ var content = await Loader.LoadAsync(url);
 var data = Parser.Parse(content);
 
 //Display.ShowSections(data.Sections);
-Display.ShowEnemies(data.Enemies);
+//Display.ShowEnemies(data.Enemies);
 
+var options = new JsonSerializerOptions
+{
+    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    //WriteIndented = true
+};
+
+var story = Converter.Convert("ãƒ¬ã‚¸ã‚§ãƒ³ãƒ‰", data);
+await File.WriteAllTextAsync("legend_stage.json", JsonSerializer.Serialize(story, options));
+
+var enemies = Converter.Convert(data.Enemies);
+await File.WriteAllTextAsync("legend_enemies.json", JsonSerializer.Serialize(enemies, options));
+
+static class Converter
+{
+    public static BattleCatModels.Story Convert(string name, Story x) => new(name, x.Sections.Select(Convert).ToArray());
+    public static BattleCatModels.Section Convert(Section x) => new(x.Name, x.Stages.Select(Convert).ToArray());
+    public static BattleCatModels.Stage Convert(Stage x) => new(x.Name, x.Energy);
+    public static BattleCatModels.Enemy[] Convert(Enemy[] x) => x.Select(Convert).ToArray();
+    public static BattleCatModels.Enemy Convert(Enemy x) => new(x.Name, x.AppearingStages.Select(ToRef).ToArray());
+    public static BattleCatModels.StageRef ToRef(Stage x) => new(x.Section.Index, x.Index);
+}
 
 static class Loader
 {
@@ -31,7 +54,7 @@ static class Display
             var j = 1;
             foreach (var stage in sec.Stages)
             {
-                Console.WriteLine($"    {j++}. {stage.Name} (“—¦—Í: {stage.Stamina}) {string.Join(", ", stage.Enemies.Select(e => e.Name))}");
+                Console.WriteLine($"    {j++}. {stage.Name} (çµ±ç‡åŠ›: {stage.Energy}) {string.Join(", ", stage.Enemies.Select(e => e.Name))}");
             }
         }
     }
@@ -40,8 +63,7 @@ static class Display
     {
         foreach (var e in enemies)
         {
-            Console.WriteLine($"{e.Name} (“oê‰ñ”: {e.AppearingStages.Count})");
+            Console.WriteLine($"{e.Name} (ç™»å ´å›æ•°: {e.AppearingStages.Count})");
         }
     }
-
 }
