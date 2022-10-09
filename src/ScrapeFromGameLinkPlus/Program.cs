@@ -34,7 +34,7 @@ static class Converter
 
     public static BattleCatModels.Story Convert(string name, Story x) => new(name, x.Sections.Select(Convert).ToArray());
     public static BattleCatModels.Section Convert(Section x) => new(x.Name, x.Stages.Select(Convert).ToArray());
-    public static BattleCatModels.Stage Convert(Stage x) => new(x.Name, x.Energy);
+    public static BattleCatModels.Stage Convert(Stage x) => new(x.Name, x.Stamina);
     public static BattleCatModels.EnemyAppearance[] Convert(Enemy[] x) => x.Select(Convert).ToArray();
     public static BattleCatModels.EnemyAppearance Convert(Enemy x) => new(_enemyTable[x.Name], x.AppearingStages.Select(ToRef).ToArray());
     public static BattleCatModels.StageRef ToRef(Stage x) => new(x.Section.Index, x.Index);
@@ -62,7 +62,7 @@ static class Display
             var j = 1;
             foreach (var stage in sec.Stages)
             {
-                Console.WriteLine($"    {j++}. {stage.Name} (統率力: {stage.Energy}) {string.Join(", ", stage.Enemies.Select(e => e.Name))}");
+                Console.WriteLine($"    {j++}. {stage.Name} (統率力: {stage.Stamina}) {string.Join(", ", stage.Enemies.Select(e => e.Name))}");
             }
         }
     }
