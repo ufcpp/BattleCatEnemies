@@ -4,7 +4,7 @@ record Enemy(string Name, List<Stage> AppearingStages)
 {
     public Enemy(string name) : this(name, new()) { }
 }
-record Stage(string Name, int Index, int Energy, Enemy[] Enemies)
+record Stage(string Name, int Index, int Stamina, Enemy[] Enemies)
 {
     public Section Section { get; internal set; } = default!;
 }
