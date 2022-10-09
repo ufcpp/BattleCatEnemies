@@ -16,28 +16,26 @@ public sealed class StoryConverter : JsonConverter<Story>
 
     public override Story Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) Throw();
-        if (reader.GetString() is not { } name) { Throw(); return null!; }
+        if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
+        if (!reader.Read() || reader.GetString() is not { } name) throw new JsonException();
 
-        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) Throw();
-
+        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
         var sections = new List<Section>();
         while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
         {
             sections.Add(_section.Read(ref reader, typeof(Section), options));
         }
 
+        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
         var enemies = new List<EnemyAppearance>();
         while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
         {
             enemies.Add(_enemy.Read(ref reader, typeof(EnemyAppearance), options));
         }
 
-        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) Throw();
+        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) throw new JsonException();
 
         return new(name, sections.ToArray(), enemies.ToArray());
-
-        static void Throw() => new JsonException();
     }
 
     public override void Write(Utf8JsonWriter writer, Story value, JsonSerializerOptions options)

@@ -15,10 +15,10 @@ public sealed class SectionConverter : JsonConverter<Section>
 
     public override Section Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) Throw();
-        if (reader.GetString() is not { } name) { Throw(); return null!; }
+        if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
+        if (!reader.Read() || reader.GetString() is not { } name) throw new JsonException();
 
-        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) Throw();
+        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
 
         var stages = new List<Stage>();
         while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
@@ -26,11 +26,9 @@ public sealed class SectionConverter : JsonConverter<Section>
             stages.Add(_stage.Read(ref reader, typeof(Stage), options));
         }
 
-        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) Throw();
+        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) throw new JsonException();
 
         return new(name, stages.ToArray());
-
-        static void Throw() => new JsonException();
     }
 
     public override void Write(Utf8JsonWriter writer, Section value, JsonSerializerOptions options)

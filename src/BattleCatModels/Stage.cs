@@ -13,14 +13,12 @@ public sealed class StageConverter : JsonConverter<Stage>
 {
     public override Stage Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) Throw();
-        if (reader.GetString() is not { } name) { Throw(); return null!; }
-        if (!reader.TryGetInt32(out var energy)) Throw();
-        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) Throw();
+        if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
+        if (!reader.Read() || reader.GetString() is not { } name) throw new JsonException();
+        if (!reader.Read() || reader.TokenType != JsonTokenType.Number || !reader.TryGetInt32(out var energy)) throw new JsonException();
+        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) throw new JsonException();
 
         return new(name, energy);
-
-        static void Throw() => new JsonException();
     }
 
     public override void Write(Utf8JsonWriter writer, Stage value, JsonSerializerOptions options)

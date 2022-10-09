@@ -15,22 +15,19 @@ public sealed class EnemyAppearanceConverter : JsonConverter<EnemyAppearance>
 
     public override EnemyAppearance Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) Throw();
-        if (!reader.TryGetInt32(out var enemyId)) Throw();
+        if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
+        if (!reader.Read() || reader.TokenType != JsonTokenType.Number || !reader.TryGetInt32(out var enemyId)) throw new JsonException();
 
-        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) Throw();
-
+        if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray) throw new JsonException();
         var stages = new List<StageRef>();
-        while(reader.Read() && reader.TokenType != JsonTokenType.EndArray)
+        while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
         {
             stages.Add(_stageRef.Read(ref reader, typeof(StageRef), options));
         }
 
-        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) Throw();
+        if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) throw new JsonException();
 
         return new(enemyId, stages.ToArray());
-
-        static void Throw() => new JsonException();
     }
 
     public override void Write(Utf8JsonWriter writer, EnemyAppearance value, JsonSerializerOptions options)
