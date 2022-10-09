@@ -17,10 +17,7 @@ var options = new JsonSerializerOptions
 };
 
 var story = Converter.Convert("レジェンド", data);
-await File.WriteAllTextAsync("legend_stage.json", JsonSerializer.Serialize(story, options));
-
-var enemies = Converter.Convert(data.Enemies);
-await File.WriteAllTextAsync("legend_enemies.json", JsonSerializer.Serialize(enemies, options));
+await File.WriteAllTextAsync("legend.json", JsonSerializer.Serialize(story, options));
 
 static class Converter
 {
@@ -32,7 +29,7 @@ static class Converter
         _enemyTable = enemies.GroupBy(e => e.Name).ToDictionary(g => g.Key, g => g.First().Id);
     }
 
-    public static BattleCatModels.Story Convert(string name, Story x) => new(name, x.Sections.Select(Convert).ToArray());
+    public static BattleCatModels.Story Convert(string name, Story x) => new(name, x.Sections.Select(Convert).ToArray(), Convert(x.Enemies));
     public static BattleCatModels.Section Convert(Section x) => new(x.Name, x.Stages.Select(Convert).ToArray());
     public static BattleCatModels.Stage Convert(Stage x) => new(x.Name, x.Stamina);
     public static BattleCatModels.EnemyAppearance[] Convert(Enemy[] x) => x.Select(Convert).ToArray();
