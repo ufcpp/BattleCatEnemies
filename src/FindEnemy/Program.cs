@@ -1,6 +1,6 @@
 using BattleCatModels;
 
-var enemies = Enemy.LoadFromCsv(await File.ReadAllTextAsync("enemies.txt"));
+var enemies = Enemy.LoadFromCsv(await File.ReadAllTextAsync("data/enemies.txt"));
 
 while (true)
 {

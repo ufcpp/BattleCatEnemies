@@ -28,7 +28,7 @@ static class Converter
 
     static Converter()
     {
-        var enemies = BattleCatModels.Enemy.LoadFromCsv(File.ReadAllText("enemies.txt"));
+        var enemies = BattleCatModels.Enemy.LoadFromCsv(File.ReadAllText("data/enemies.txt"));
         _enemyTable = enemies.GroupBy(e => e.Name).ToDictionary(g => g.Key, g => g.First().Id);
     }
 
