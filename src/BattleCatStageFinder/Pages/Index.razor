@@ -1,3 +1,4 @@
-﻿@page "/"
+@page "/"
+@inject BattleCat.StageFinder finder
 
-<h1>Hello, world!</h1>
+<h1>Hello, world! @finder.Story.Name</h1>
