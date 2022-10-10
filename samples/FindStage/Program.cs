@@ -1,3 +1,4 @@
+using BattleCat;
 using BattleCat.DataModels;
 
 var finder = await BattleCat.StaticData.Loader.LoadFinder("legend");
@@ -6,6 +7,8 @@ find1(381);
 find2(8, 16);
 find3(2, 4, 14);
 find2(9, 19);
+find3(47, 25, 150);
+find3(18, 19, 46);
 
 void find1(int enemyId)
 {
@@ -31,7 +34,7 @@ void find3(int enemyId1, int enemyId2, int enemyId3)
     write(finder.Find(enemyId1, enemyId2, enemyId3)!);
 }
 
-void write(IEnumerable<StageRef> stageRefs)
+void write(IEnumerable<Array3<StageRef>> stageRefs)
 {
     var stages =
         from x in stageRefs
@@ -39,7 +42,7 @@ void write(IEnumerable<StageRef> stageRefs)
         orderby stage.Energy()
         select stage;
 
-    foreach (var x in stages)
+    foreach (var x in stages.Take(5))
     {
         Console.WriteLine($"    {x}");
     }
