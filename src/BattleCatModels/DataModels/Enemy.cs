@@ -31,7 +31,7 @@ public record Enemy(int Id, string Name, string Kana)
         return enemies;
     }
 
-    public static IEnumerable<Enemy> FindByName(Enemy[] enemies, string name)
+    public static IEnumerable<Enemy> FindByName(ReadOnlySpan<Enemy> enemies, string name)
     {
         var list = new List<Enemy>();
         var kname = Japanese.Kana.KatakanaToHiragana(name);
