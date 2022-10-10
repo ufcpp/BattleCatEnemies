@@ -25,4 +25,11 @@ public class Loader
     public static IEnumerable<string> EnumerateStages()
         => Directory.EnumerateFiles("StaticData/Stages")
         .Select(x => Path.GetFileNameWithoutExtension(x));
+
+    public static async ValueTask<StageFinder> LoadFinder(string stageName)
+    {
+        var enemies = await LoadEnemies();
+        var story = await LoadStory(stageName);
+        return new(story, enemies);
+    }
 }

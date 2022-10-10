@@ -7,7 +7,7 @@ namespace BattleCat.DataModels;
 /// インデックスだけあれば「何 <see name="Section"/> 目の何 <see cref="Stage"/>」が特定できるので int で参照。
 /// </summary>
 [JsonConverter(typeof(StageRefConverter))]
-public record struct StageRef(int Section, int Stage);
+public record struct StageRef(byte Section, byte Stage);
 
 public sealed class StageRefConverter : JsonConverter<StageRef>
 {
@@ -18,7 +18,7 @@ public sealed class StageRefConverter : JsonConverter<StageRef>
         if (!reader.Read() || reader.TokenType != JsonTokenType.Number || !reader.TryGetInt32(out var stage)) throw new JsonException();
         if (!reader.Read() || reader.TokenType != JsonTokenType.EndArray) throw new JsonException();
 
-        return new(section, stage);
+        return new((byte)section, (byte)stage);
     }
 
     public override void Write(Utf8JsonWriter writer, StageRef value, JsonSerializerOptions options)

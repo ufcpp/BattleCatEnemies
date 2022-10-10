@@ -34,7 +34,7 @@ static class Converter
     public static BattleCat.DataModels.Stage Convert(Stage x) => new(x.Name, x.Stamina);
     public static BattleCat.DataModels.EnemyAppearance[] Convert(Enemy[] x) => x.Select(Convert).ToArray();
     public static BattleCat.DataModels.EnemyAppearance Convert(Enemy x) => new(_enemyTable[x.Name], x.AppearingStages.Select(ToRef).ToArray());
-    public static BattleCat.DataModels.StageRef ToRef(Stage x) => new(x.Section.Index, x.Index);
+    public static BattleCat.DataModels.StageRef ToRef(Stage x) => new((byte)x.Section.Index, (byte)x.Index);
 }
 
 static class Loader
