@@ -1,4 +1,69 @@
 @page "/"
+@using Microsoft.AspNetCore.Components.Forms
+@using BattleCatStageFinder.PageModels
 @inject BattleCat.StageFinder finder
 
 <h1>Hello, world! @finder.Story.Name</h1>
+
+<p>
+    <label>
+        1体目 <input type="number" @bind-value="@_model.Id1" />
+    </label>
+</p>
+
+<p>
+    <label>
+        2体目 <input type="number" @bind-value="@_model.Id2" />
+    </label>
+</p>
+
+<p>
+    <label>
+        3体目 <input type="number" @bind-value="@_model.Id3" />
+    </label>
+</p>
+
+<p>
+    <label>
+        表示個数 <input type="number" @bind-value="@_model.Take" />
+    </label>
+</p>
+
+<p>
+    <button @onclick="HandleSubmit">submit</button>
+</p>
+
+@if (_model.Enemies != null)
+{
+    <ul>
+        @foreach (var x in _model.Enemies)
+        {
+            <li>@x</li>
+        }
+    </ul>
+}
+
+@if (_model.Stages != null)
+{
+    <ul>
+        @foreach (var x in _model.Stages)
+        {
+            <li>@x</li>
+        }
+    </ul>
+}
+
+@code {
+    private StageFinderModel _model = default!;
+
+    protected override void OnInitialized()
+    {
+        _model = new(finder);
+        base.OnInitialized();
+    }
+
+    private void HandleSubmit()
+    {
+        _model.Find();
+    }
+}
