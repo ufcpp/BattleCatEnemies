@@ -1,6 +1,6 @@
-﻿namespace BattleCatModels;
+namespace BattleCatModels;
 
-public record Enemy(int Id, string Name, string Kana, string Romaji)
+public record Enemy(int Id, string Name, string Kana)
 {
     public static Enemy[] LoadFromCsv(string csv)
     {
@@ -16,12 +16,16 @@ public record Enemy(int Id, string Name, string Kana, string Romaji)
 
             var id = int.Parse(items[0]);
             var name = items[1];
-            var kana = items[2];
+            var kana = items[2].ToLowerInvariant();
 
             // kana is empty if it can be obtained by a simple transformation from name.
-            if(string.IsNullOrEmpty(kana)) kana = Japanese.Kana.KatakanaToHiragana(name);
+            if (string.IsNullOrEmpty(kana)) kana = Japanese.Kana.KatakanaToHiragana(name);
 
+            enemies[i] = new(id, name, kana);
+
+#if false // 昔は「かなデータ → ローマ字」の方でやってた。今は「ローマ字入力 → かな」
             enemies[i] = new(id, name, kana, Japanese.Kana.HirakanaToRomaji(kana));
+#endif
         }
 
         return enemies;
@@ -31,13 +35,13 @@ public record Enemy(int Id, string Name, string Kana, string Romaji)
     {
         var list = new List<Enemy>();
         var kname = Japanese.Kana.KatakanaToHiragana(name);
-        var lname = name.ToLower();
+        var rname = Japanese.Kana.RomajiToHiragana(name);
 
         foreach (var enemy in enemies)
         {
             if (enemy.Name.Contains(name)
                 || enemy.Kana.Contains(kname)
-                || enemy.Romaji.Contains(lname)
+                || enemy.Kana.Contains(rname)
                 ) list.Add(enemy);
         }
 

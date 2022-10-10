@@ -21,11 +21,11 @@ public static class Kana
         }
     }
 
-    // 今、ひらがなからローマ字を作って、ユーザー入力のローマ字と比較してる。
+    public static string RomajiToHiragana(ReadOnlySpan<char> s) => Romaji.Convert(s);
+
+    // ひらがなからローマ字を作って、ユーザー入力のローマ字と比較する方式もやってみてた。
     // 逆(ユーザー入力のローマ字をひらがなに変換して、Enemy.Kana と比較)の方が精度高いかも。
-    //
-    // カバちゃんは kabachan か kabatyan か迷う。
-    // ch で登録されてるけど、自分は ty の方使ってた。
+    // (カバちゃんは kabachan か kabatyan か迷ったり。)
     public static string HirakanaToRomaji(ReadOnlySpan<char> s)
     {
         static string? oneChar(char c) => c switch
