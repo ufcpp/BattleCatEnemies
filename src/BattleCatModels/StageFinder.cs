@@ -9,7 +9,7 @@ public class StageFinder
     private readonly Enemy[] _appearedEnemies;
     private readonly Dictionary<int, EnemyAppearance> _enemyMap;
 
-    public record struct Entry(Section Section, Stage Stage)
+    public record struct Entry(int SectionId, Section Section, int StageId, Stage Stage)
     {
         public int Energy() => Stage.Energy;
         public override string ToString() => $"{Section.Name} - {Stage.Name} ({Stage.Energy})";
@@ -52,22 +52,29 @@ public class StageFinder
     private StageRef[]? FindSingle(int enemyId)
         => _enemyMap.TryGetValue(enemyId, out var e) ? e.Stages : null;
 
+    /// <summary>
+    /// 敵が出るステージを検索。
+    /// </summary>
+    public IEnumerable<EntryArray> Find(int take, params int[] enemyIds)
+        => FindRaw(enemyIds).Select(Resolve)
+        .OrderBy(x => x.Energy())
+        .Take(take);
 
     /// <summary>
     /// 敵が出るステージを検索。
     /// </summary>
-    public IEnumerable<Array3<StageRef>> Find(params int[] enemyIds) => enemyIds.Length switch
+    public IEnumerable<Array3<StageRef>> FindRaw(params int[] enemyIds) => enemyIds.Length switch
     {
-        1 => Find(enemyIds[0]),
-        2 => Find(enemyIds[0], enemyIds[1]),
-        3 => Find(enemyIds[0], enemyIds[1], enemyIds[2]),
+        1 => FindRaw(enemyIds[0]),
+        2 => FindRaw(enemyIds[0], enemyIds[1]),
+        3 => FindRaw(enemyIds[0], enemyIds[1], enemyIds[2]),
         _ => Array.Empty<Array3<StageRef>>(),
     };
 
     /// <summary>
     /// 敵が出るステージを検索。
     /// </summary>
-    public IEnumerable<Array3<StageRef>> Find(int enemyId1)
+    public IEnumerable<Array3<StageRef>> FindRaw(int enemyId1)
     {
         var stages1 = FindSingle(enemyId1);
 
@@ -82,7 +89,7 @@ public class StageFinder
     /// <summary>
     /// 2種の敵が同時に出るステージを検索。
     /// </summary>
-    public IEnumerable<Array3<StageRef>> Find(int enemyId1, int enemyId2)
+    public IEnumerable<Array3<StageRef>> FindRaw(int enemyId1, int enemyId2)
     {
         var stages1 = FindSingle(enemyId1);
         var stages2 = FindSingle(enemyId2);
@@ -103,7 +110,7 @@ public class StageFinder
     /// <remarks>
     /// 最大3種まで同時にミッションに現れるので、3引数まで用意。
     /// </remarks>
-    public IEnumerable<Array3<StageRef>> Find(int enemyId1, int enemyId2, int enemyId3)
+    public IEnumerable<Array3<StageRef>> FindRaw(int enemyId1, int enemyId2, int enemyId3)
     {
         var stages1 = FindSingle(enemyId1);
         var stages2 = FindSingle(enemyId2);
@@ -165,7 +172,7 @@ public class StageFinder
     {
         var section = Story.Sections[stageRef.Section];
         var stage = section.Stages[stageRef.Stage];
-        return new(section, stage);
+        return new(stageRef.Section + 1, section, stageRef.Stage + 1, stage);
     }
 
     public EntryArray Resolve(Array3<StageRef> stageRef)

@@ -1,6 +1,8 @@
+using System.Collections;
+
 namespace BattleCat;
 
-public struct Array3<T>
+public struct Array3<T> : IEnumerable<T>
 {
     private readonly byte _length;
     private readonly T _x1, _x2, _x3;
@@ -22,6 +24,15 @@ public struct Array3<T>
         if (3 > _length) throw new IndexOutOfRangeException();
         (x1, x2, x3) = (_x1, _x2, _x3);
     }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        if (Length >= 1) yield return _x1;
+        if (Length >= 2) yield return _x2;
+        if (Length >= 3) yield return _x3;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public int Length => _length;
 

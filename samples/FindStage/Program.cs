@@ -79,7 +79,7 @@ var enemyIds = selectedEnemies.Select(e => e.Id).ToArray();
 
 Console.WriteLine($"{string.Join(" と ", enemyIds.Select(id => finder.FindEnemy(id)!.Name))} が出てくるステージ(上位5件):");
 
-var stageRefs = finder.Find(enemyIds);
+var stageRefs = finder.FindRaw(enemyIds);
 
 var stages =
     from x in stageRefs
@@ -107,7 +107,7 @@ class Sample
         void find(params int[] enemyIds)
         {
             Console.WriteLine($"{string.Join(" と ", enemyIds.Select(id => finder.FindEnemy(id)!.Name))} が出てくるステージ:");
-            write(finder.Find(enemyIds)!);
+            write(finder.FindRaw(enemyIds)!);
         }
 
         void write(IEnumerable<Array3<StageRef>> stageRefs)

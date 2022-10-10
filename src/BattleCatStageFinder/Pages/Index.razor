@@ -3,54 +3,70 @@
 @using BattleCatStageFinder.PageModels
 @inject BattleCat.StageFinder finder
 
-<h1>Hello, world! @finder.Story.Name</h1>
+<h1>@finder.Story.Name からのステージ検索</h1>
 
+<h2>検索条件</h2>
+@*
 <p>
-    <label>
-        1体目 <input type="number" @bind-value="@_model.Id1" />
-    </label>
+    表示個数 <input type="number" @bind-value="@_model.Take" />
 </p>
-
-<p>
-    <label>
-        2体目 <input type="number" @bind-value="@_model.Id2" />
-    </label>
-</p>
-
-<p>
-    <label>
-        3体目 <input type="number" @bind-value="@_model.Id3" />
-    </label>
-</p>
-
-<p>
-    <label>
-        表示個数 <input type="number" @bind-value="@_model.Take" />
-    </label>
-</p>
+*@
+<table>
+    <tr>
+        <th>1体目</th>
+        <th>2体目</th>
+        <th>3体目</th>
+    </tr>
+    <tr>
+        <td><input type="number" @bind-value="@_model.Id1" /></td>
+        <td><input type="number" @bind-value="@_model.Id2" /></td>
+        <td><input type="number" @bind-value="@_model.Id3" /></td>
+    </tr>
+    <tr>
+        <td><span class="enemy_name">@_model.Enemy1?.Name</span></td>
+        <td><span class="enemy_name">@_model.Enemy2?.Name</span></td>
+        <td><span class="enemy_name">@_model.Enemy3?.Name</span></td>
+    </tr>
+</table>
 
 <p>
     <button @onclick="HandleSubmit">submit</button>
 </p>
 
-@if (_model.Enemies != null)
-{
-    <ul>
-        @foreach (var x in _model.Enemies)
-        {
-            <li>@x</li>
-        }
-    </ul>
-}
-
 @if (_model.Stages != null)
 {
-    <ul>
+    <h2>見つかったステージ</h2>
+    <table>
+        <tr>
+            <th>合計統率力</th>
+            <th>ステージ1</th>
+            <th>ステージ2</th>
+            <th>ステージ3</th>
+        </tr>
         @foreach (var x in _model.Stages)
         {
-            <li>@x</li>
+            <tr>
+                <td>
+                    <span class="energy">@x.Energy()</span>
+                </td>
+            @foreach (var stage in x.Entries)
+            {
+                <td>
+                    <span class="section">
+                        @(stage.SectionId)章 @stage.Section.Name
+                    </span>
+                    <br/>
+                    <span class="stage">
+                        @(stage.StageId). @stage.Stage.Name
+                    </span>
+                        <span class="energy">
+                        (@stage.Energy())
+                    </span>
+                </td>
+            }
+            </tr>
         }
-    </ul>
+    </table>
 }
 
 @code {

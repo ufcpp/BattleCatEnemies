@@ -15,7 +15,11 @@ public class StageFinderModel
     public int? Id1 { get; set; }
     public int? Id2 { get; set; }
     public int? Id3 { get; set; }
-    public int Take { get; set; } = 10;
+    public int Take { get; set; } = 5;
+
+    public Enemy? Enemy1 => Id1 is { } id ? _finder.FindEnemy(id) : null;
+    public Enemy? Enemy2 => Id2 is { } id ? _finder.FindEnemy(id) : null;
+    public Enemy? Enemy3 => Id3 is { } id ? _finder.FindEnemy(id) : null;
 
     public void Find()
     {
@@ -24,12 +28,8 @@ public class StageFinderModel
         .Select(id => id.GetValueOrDefault())
         .ToArray();
 
-        var stageRefs = _finder.Find(ids);
-        Stages = stageRefs.Select(_finder.Resolve).Take(Take).ToArray();
-
-        Enemies = ids.Select(_finder.FindEnemy)!.ToArray()!;
+        Stages = _finder.Find(Take, ids).ToArray();
     }
 
     public IEnumerable<StageFinder.EntryArray>? Stages { get; private set; }
-    public IEnumerable<Enemy>? Enemies { get; private set; }
 }
