@@ -6,31 +6,59 @@
 <h1>@finder.Story.Name からのステージ検索</h1>
 
 <h2>検索条件</h2>
+
+@*
+↓コントロール化したい。
+*@
+
+<div>
+    <span style="font-weight:bold;">1体目</span>
+    <span style="font-size:x-small;color:#727272;">条件:</span>
+    <input style="width:8em" type="text" @bind-value="@_model.Options1.Filter" />
+    <span style="font-size:x-small;color:#727272;">選択:</span>
+    <input type="text" @bind-value="@_model.Options1.SelectedValue" list="options1" />
+    <datalist id="options1">
+        @foreach (var x in _model.Options1.Options)
+        {
+            <option value="@x.Name" disabled="@x.Disabled" />
+        }
+    </datalist>
+</div>
+<div>
+    <span style="font-weight:bold;">2体目</span>
+    <span style="font-size:x-small;color:#727272;">条件:</span>
+    <input style="width:8em" type="text" @bind-value="@_model.Options2.Filter" />
+    <span style="font-size:x-small;color:#727272;">選択:</span>
+    <input type="text" @bind-value="@_model.Options2.SelectedValue" list="options2" />
+    <datalist id="options2">
+        @foreach (var x in _model.Options2.Options)
+        {
+            <option value="@x.Name" disabled="@x.Disabled" />
+        }
+    </datalist>
+</div>
+<div>
+    <span style="font-weight:bold;">3体目</span>
+    <span style="font-size:x-small;color:#727272;">条件:</span>
+    <input style="width:8em" type="text" @bind-value="@_model.Options3.Filter" />
+    <span style="font-size:x-small;color:#727272;">選択:</span>
+    <input type="text" @bind-value="@_model.Options3.SelectedValue" list="options3" />
+    <datalist id="options3">
+        @foreach (var x in _model.Options3.Options)
+        {
+            <option value="@x.Name" disabled="@x.Disabled" />
+        }
+    </datalist>
+</div>
+
 @*
 <p>
     表示個数 <input type="number" @bind-value="@_model.Take" />
 </p>
 *@
-<table>
-    <tr>
-        <th>1体目</th>
-        <th>2体目</th>
-        <th>3体目</th>
-    </tr>
-    <tr>
-        <td><input type="number" @bind-value="@_model.Id1" /></td>
-        <td><input type="number" @bind-value="@_model.Id2" /></td>
-        <td><input type="number" @bind-value="@_model.Id3" /></td>
-    </tr>
-    <tr>
-        <td><span class="enemy_name">@_model.Enemy1?.Name</span></td>
-        <td><span class="enemy_name">@_model.Enemy2?.Name</span></td>
-        <td><span class="enemy_name">@_model.Enemy3?.Name</span></td>
-    </tr>
-</table>
 
 <p>
-    <button @onclick="HandleSubmit">submit</button>
+    <button @onclick="HandleSubmit">検索</button>
 </p>
 
 @if (_model.Stages != null)

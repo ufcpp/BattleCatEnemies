@@ -1,3 +1,6 @@
+using System;
+using System.Xml.Linq;
+
 namespace BattleCat.DataModels;
 
 public record Enemy(int Id, string Name, string Kana)
@@ -46,5 +49,14 @@ public record Enemy(int Id, string Name, string Kana)
         }
 
         return list;
+    }
+
+    public bool Match(string filter)
+    {
+        var kana = Japanese.Kana.KatakanaToHiragana(filter);
+        var roma = Japanese.Kana.RomajiToHiragana(filter);
+        return Name.Contains(filter)
+                || Kana.Contains(kana)
+                || Kana.Contains(roma);
     }
 }

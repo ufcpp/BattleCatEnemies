@@ -29,7 +29,6 @@
 
 body {
     background-color: #F3F5F8;
-    color: black;
 }
 span.enemy_name {
     font-weight: bold;
@@ -47,4 +46,16 @@ span.stage {
 span.energy {
     font-weight: bold;
     color: forestgreen;
+}
+
+h1 {
+    font-size:medium;
+    background-color:#bee6de;
+    padding:5px 10px 5px 10px;
+}
+
+h2 {
+    font-size: medium;
+    background-color: #b6e6ee;
+    padding:3px 10px 3px 10px;
 }
