@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{AE63
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindStage", "samples\FindStage\FindStage.csproj", "{10FFD8E5-902C-46BA-B2AC-3FF4063F7B25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleCatStageFinder", "src\BattleCatStageFinder\BattleCatStageFinder.csproj", "{BF6ACEE1-4A56-4347-95CD-E5730B2FA315}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{10FFD8E5-902C-46BA-B2AC-3FF4063F7B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10FFD8E5-902C-46BA-B2AC-3FF4063F7B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10FFD8E5-902C-46BA-B2AC-3FF4063F7B25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF6ACEE1-4A56-4347-95CD-E5730B2FA315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6ACEE1-4A56-4347-95CD-E5730B2FA315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6ACEE1-4A56-4347-95CD-E5730B2FA315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6ACEE1-4A56-4347-95CD-E5730B2FA315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{914DF8DB-AE0F-4E58-A6F1-4C875EB243CF} = {AE637BA5-DFA4-40C2-BF19-4E4ECA6A22D4}
 		{13967293-8B16-4D3F-8A78-BB4DC7A916DB} = {1C983C79-9D9B-47D0-ACAF-48D0799E5312}
 		{10FFD8E5-902C-46BA-B2AC-3FF4063F7B25} = {AE637BA5-DFA4-40C2-BF19-4E4ECA6A22D4}
+		{BF6ACEE1-4A56-4347-95CD-E5730B2FA315} = {6B9E448D-1CB4-4ABC-98B8-649856DE6F8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49CE5634-C8D1-4B5A-8B8F-E01587E53B8E}
