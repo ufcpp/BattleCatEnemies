@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace BattleCatModels.Japanese;
+namespace BattleCat.Japanese;
 
 public static class Kana
 {

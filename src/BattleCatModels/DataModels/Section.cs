@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace BattleCatModels;
+namespace BattleCat.DataModels;
 
 /// <summary>
 /// 「伝説のはじまり」とか「脆弱性と弱酸性」とかのレベル。

@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace BattleCatModels;
+namespace BattleCat.DataModels;
 
 /// <summary>
 /// 敵がどのステージに出現するか。

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace BattleCatModels;
+namespace BattleCat.DataModels;
 
 /// <summary>
 /// 「レジェンド」とか「真レジェンド」とかのレベル。

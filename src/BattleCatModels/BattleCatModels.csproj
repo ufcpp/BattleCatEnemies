@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>BattleCat</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Data\enemies.txt">
+    <None Update="StaticData\enemies.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Stages\legend.json">
+    <None Update="StaticData\Stages\legend.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,6 +1,6 @@
-using BattleCatModels;
+using BattleCat.DataModels;
 
-var enemies = await BattleCatModels.Data.Loader.LoadEnemies();
+var enemies = await BattleCat.StaticData.Loader.LoadEnemies();
 
 while (true)
 {

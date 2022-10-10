@@ -1,4 +1,4 @@
-namespace BattleCatModels;
+namespace BattleCat.DataModels;
 
 public record Enemy(int Id, string Name, string Kana)
 {
