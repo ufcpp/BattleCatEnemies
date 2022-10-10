@@ -52,10 +52,22 @@ public class StageFinder
     private StageRef[]? FindSingle(int enemyId)
         => _enemyMap.TryGetValue(enemyId, out var e) ? e.Stages : null;
 
+
     /// <summary>
     /// 敵が出るステージを検索。
     /// </summary>
-    public IEnumerable<Array3<StageRef>>? Find(int enemyId1)
+    public IEnumerable<Array3<StageRef>> Find(params int[] enemyIds) => enemyIds.Length switch
+    {
+        1 => Find(enemyIds[0]),
+        2 => Find(enemyIds[0], enemyIds[1]),
+        3 => Find(enemyIds[0], enemyIds[1], enemyIds[2]),
+        _ => Array.Empty<Array3<StageRef>>(),
+    };
+
+    /// <summary>
+    /// 敵が出るステージを検索。
+    /// </summary>
+    public IEnumerable<Array3<StageRef>> Find(int enemyId1)
     {
         var stages1 = FindSingle(enemyId1);
 
