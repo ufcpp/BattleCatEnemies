@@ -9,6 +9,7 @@ find3(2, 4, 14);
 find2(9, 19);
 find3(47, 25, 150);
 find3(18, 19, 46);
+find3(19, 33, 55);
 
 void find1(int enemyId)
 {
