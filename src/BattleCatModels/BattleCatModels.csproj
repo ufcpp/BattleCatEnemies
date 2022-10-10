@@ -5,13 +5,4 @@
     <RootNamespace>BattleCat</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Update="StaticData\enemies.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="StaticData\Stages\legend.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
