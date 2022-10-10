@@ -5,25 +5,24 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6B9E448D-1CB4-4ABC-98B8-649856DE6F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrapeFromGameLinkPlus", "src\ScrapeFromGameLinkPlus\ScrapeFromGameLinkPlus.csproj", "{0C15010A-F5EC-47A1-AB9E-AA33C4B6C6D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrapeFromGameLinkPlus", "tool\ScrapeFromGameLinkPlus\ScrapeFromGameLinkPlus.csproj", "{0C15010A-F5EC-47A1-AB9E-AA33C4B6C6D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleCatModels", "src\BattleCatModels\BattleCatModels.csproj", "{E0EF0D2B-2F7D-4570-B607-6DE28F8EFE72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleCatModels", "src\BattleCatModels\BattleCatModels.csproj", "{E0EF0D2B-2F7D-4570-B607-6DE28F8EFE72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrapeEnemyFromBattleCatsDb", "src\ScrapeEnemyFromBattleCatsDb\ScrapeEnemyFromBattleCatsDb.csproj", "{06996130-523D-4323-A051-91D42DDFC86C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrapeEnemyFromBattleCatsDb", "tool\ScrapeEnemyFromBattleCatsDb\ScrapeEnemyFromBattleCatsDb.csproj", "{06996130-523D-4323-A051-91D42DDFC86C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindEnemy", "src\FindEnemy\FindEnemy.csproj", "{914DF8DB-AE0F-4E58-A6F1-4C875EB243CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindEnemy", "samples\FindEnemy\FindEnemy.csproj", "{914DF8DB-AE0F-4E58-A6F1-4C875EB243CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{1C983C79-9D9B-47D0-ACAF-48D0799E5312}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateRomajiTable", "tool\GenerateRomajiTable\GenerateRomajiTable.csproj", "{13967293-8B16-4D3F-8A78-BB4DC7A916DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateRomajiTable", "tool\GenerateRomajiTable\GenerateRomajiTable.csproj", "{13967293-8B16-4D3F-8A78-BB4DC7A916DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{AE637BA5-DFA4-40C2-BF19-4E4ECA6A22D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0C15010A-F5EC-47A1-AB9E-AA33C4B6C6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,11 +46,17 @@ Global
 		{13967293-8B16-4D3F-8A78-BB4DC7A916DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13967293-8B16-4D3F-8A78-BB4DC7A916DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0C15010A-F5EC-47A1-AB9E-AA33C4B6C6D6} = {6B9E448D-1CB4-4ABC-98B8-649856DE6F8A}
+		{0C15010A-F5EC-47A1-AB9E-AA33C4B6C6D6} = {1C983C79-9D9B-47D0-ACAF-48D0799E5312}
 		{E0EF0D2B-2F7D-4570-B607-6DE28F8EFE72} = {6B9E448D-1CB4-4ABC-98B8-649856DE6F8A}
-		{06996130-523D-4323-A051-91D42DDFC86C} = {6B9E448D-1CB4-4ABC-98B8-649856DE6F8A}
-		{914DF8DB-AE0F-4E58-A6F1-4C875EB243CF} = {6B9E448D-1CB4-4ABC-98B8-649856DE6F8A}
+		{06996130-523D-4323-A051-91D42DDFC86C} = {1C983C79-9D9B-47D0-ACAF-48D0799E5312}
+		{914DF8DB-AE0F-4E58-A6F1-4C875EB243CF} = {AE637BA5-DFA4-40C2-BF19-4E4ECA6A22D4}
 		{13967293-8B16-4D3F-8A78-BB4DC7A916DB} = {1C983C79-9D9B-47D0-ACAF-48D0799E5312}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49CE5634-C8D1-4B5A-8B8F-E01587E53B8E}
 	EndGlobalSection
 EndGlobal
