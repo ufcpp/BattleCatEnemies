@@ -32,7 +32,7 @@ internal class Romaji
 
         internal void AppendTo(ReadOnlySpan<char> roma, StringBuilder kana, bool debug = false)
         {
-            var (skip, len, x) = this;
+            var (skip, _, x) = this;
 
             if (debug) kana.Append($"{roma[..Length]} / \"");
 
@@ -41,8 +41,8 @@ internal class Romaji
                 if (skip > 0)
                 {
                     kana.Append(roma[..(skip - 1)]);
-                    if (roma[skip - 1] == 'n') kana.Append("ん"); // nka, nsa, ... みたいなの
-                    else if (roma[skip - 1] == roma[skip]) kana.Append("っ"); // kka, ssa, ... みたいなの
+                    if (roma[skip - 1] == 'n') kana.Append('ん'); // nka, nsa, ... みたいなの
+                    else if (roma[skip - 1] == roma[skip]) kana.Append('っ'); // kka, ssa, ... みたいなの
                     else kana.Append(roma[skip - 1]);
                 }
                 kana.Append(s);
