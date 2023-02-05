@@ -1,8 +1,8 @@
-using System;
-using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace BattleCat.DataModels;
 
+[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
 public record Enemy(int Id, string Name, string Kana)
 {
     public static Enemy[] LoadFromCsv(string csv)
@@ -58,5 +58,10 @@ public record Enemy(int Id, string Name, string Kana)
         return Name.Contains(filter)
                 || Kana.Contains(kana)
                 || Kana.Contains(roma);
+    }
+
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
     }
 }

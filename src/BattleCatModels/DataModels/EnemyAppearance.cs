@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,7 +8,11 @@ namespace BattleCat.DataModels;
 /// 敵がどのステージに出現するか。
 /// </summary>
 [JsonConverter(typeof(EnemyAppearanceConverter))]
-public record EnemyAppearance(int EnemyId, StageRef[] Stages);
+[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
+public record EnemyAppearance(int EnemyId, StageRef[] Stages)
+{
+    private string GetDebuggerDisplay() => $"{EnemyId}: {string.Join(", ", Stages.Select(x => x.GetDebuggerDisplay()))}";
+}
 
 public sealed class EnemyAppearanceConverter : JsonConverter<EnemyAppearance>
 {

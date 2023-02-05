@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,7 +8,11 @@ namespace BattleCat.DataModels;
 /// 「伝説のはじまり」とか「脆弱性と弱酸性」とかのレベル。
 /// </summary>
 [JsonConverter(typeof(SectionConverter))]
-public record Section(string Name, Stage[] Stages);
+[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
+public record Section(string Name, Stage[] Stages)
+{
+    private string GetDebuggerDisplay() => $"{Name}: {string.Join(", ", Stages.AsEnumerable())}";
+}
 
 public sealed class SectionConverter : JsonConverter<Section>
 {

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,6 +8,7 @@ namespace BattleCat.DataModels;
 /// インデックスだけあれば「何 <see name="Section"/> 目の何 <see cref="Stage"/>」が特定できるので int で参照。
 /// </summary>
 [JsonConverter(typeof(StageRefConverter))]
+[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
 public record struct StageRef(byte Section, byte Stage) : IComparable<StageRef>
 {
     public int CompareTo(StageRef other)
@@ -14,6 +16,8 @@ public record struct StageRef(byte Section, byte Stage) : IComparable<StageRef>
         if (Section.CompareTo(other.Section) is var x && x != 0) return x;
         return Stage.CompareTo(other.Stage);
     }
+
+    internal string GetDebuggerDisplay() => $"[{Section} {Stage}]";
 }
 
 public sealed class StageRefConverter : JsonConverter<StageRef>
