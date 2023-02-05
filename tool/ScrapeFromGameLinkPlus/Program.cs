@@ -21,7 +21,7 @@ await File.WriteAllTextAsync("legend.json", JsonSerializer.Serialize(story, opti
 
 static class Converter
 {
-    private static IReadOnlyDictionary<string, int> _enemyTable;
+    private static readonly IReadOnlyDictionary<string, int> _enemyTable;
 
     static Converter()
     {

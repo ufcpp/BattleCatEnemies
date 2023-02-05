@@ -5,14 +5,18 @@ namespace ScrapeFromGameLinkPlus;
 
 static partial class HtmlTag
 {
-    [GeneratedRegex("""\<span.*?\>(?<value>.+?)\<""")]
+    [GeneratedRegex("""\<span.*?\>(?<value>.+?)\</span""")]
     public static partial Regex Span();
 
-    [GeneratedRegex("""\<td\>(?<value>.+?)\<""", RegexOptions.Multiline)]
+    [GeneratedRegex("""\<td\>(?<value>.+?)\</td""")]
     public static partial Regex Td();
 
-    [GeneratedRegex("""\<a.*?\>(?<value>.+?)\<""")]
+    [GeneratedRegex("""\<a.*?\>(?<value>.+?)\</a\>""")]
     public static partial Regex A();
+
+    public const char Splitter = '、';
+
+    public static readonly string SplitterStr = $"{Splitter}";
 }
 
 static class Parser
@@ -31,7 +35,8 @@ static class Parser
         IEnumerable<Section> inner()
         {
             var items = content.Split("<h2>")
-                .Where(t => t.Contains("ステージ名"));
+                .Where(t => t.Contains("ステージ名"))
+                .Select(t => t.Replace("\n", ""));
 
             var i = 0;
             foreach (var x in items)
@@ -69,7 +74,15 @@ static class Parser
 
                 var stamina = int.Parse(m.Groups["value"].Value);
 
-                var stage = new Stage(name, i++, stamina, ParseEmeny(x, enemies));
+                m = m.NextMatch();
+                System.Diagnostics.Debug.Assert(m.Success);
+
+                var enemiesLineHtml = m.Groups["value"].Value;
+                var enemiesLine = HtmlTag.A()
+                    .Replace(enemiesLineHtml, m => m.Groups["value"].Value)
+                    .Replace("<br />", HtmlTag.SplitterStr);
+
+                var stage = new Stage(name, i++, stamina, ParseEmeny(enemiesLine, enemies));
                 foreach (var e in stage.Enemies) e.AppearingStages.Add(stage);
                 yield return stage;
             }
@@ -82,11 +95,9 @@ static class Parser
 
         IEnumerable<Enemy> inner()
         {
-            for (var m = HtmlTag.A().Match(content); m.Success; m = m.NextMatch())
+            foreach (var name in content.Split(HtmlTag.Splitter))
             {
-                var name = m.Groups["value"].Value;
-                if (name.Contains("の情報は")) continue;
-                var enemy = getEnemy(enemies, name);
+                var enemy = getEnemy(enemies, name.Trim());
                 yield return enemy;
             }
         }
